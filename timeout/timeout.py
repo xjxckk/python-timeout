@@ -19,5 +19,3 @@ class timeout:
             til = til.strftime('%H:%M')
             print('Sleeping', timeout_in_minutes, 'minutes until', til)
         sleep(timeout_in_seconds)
-
-timeout(3, 7)
