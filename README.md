@@ -1,6 +1,7 @@
 ### Timeout
 Random timeout between minimum and maximum values
 
+`pip install python-timeout`
 
 ```
 import timeout
