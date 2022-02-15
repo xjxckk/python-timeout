@@ -1,1 +1,1 @@
-from timeout.timeout import timeout
+from .timeout import timeout
