@@ -19,3 +19,14 @@ class timeout:
             til = til.strftime('%H:%M')
             print('Sleeping', timeout_in_minutes, 'minutes until', til)
         sleep(timeout_in_seconds)
+
+
+class sleep_until:
+    '''Sleep amount of time in minutes, print when it will wakeup'''
+
+    def __init__(self, minutes):
+        til = datetime.now() + timedelta(minutes=minutes)
+        til = til.strftime('%H:%M')
+        print('Sleeping', minutes, 'minutes until', til)
+        print()
+        sleep(minutes * 60)

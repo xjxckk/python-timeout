@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name = 'python-timeout',
     packages = ['timeout'],
-    version = '1',
+    version='2',
     description = 'Random timeout between minimum and maximum values',
     url = 'https://github.com/xjxckk/python-timeout/',
     download_url = 'https://github.com/xjxckk/python-timeout/archive/refs/tags/v1.tar.gz',
