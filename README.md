@@ -6,8 +6,11 @@ Installation:
 
 Usage:
 ```
-from timeout import timeout
+from timeout import random_timeout, sleep_for
 
-timeout(10, 20) # Random timeout between 10 and 20 seconds
-timeout(60, 120) # Random timeout between one minute (60 seconds) and two minutes (120 seconds)
+random_timeout(10, 20) # Random timeout between 10 and 20 seconds
+random_timeout(60, 120) # Random timeout between one minute (60 seconds) and two minutes (120 seconds)
+
+sleep_for(5) # Sleep for five minutes
+sleep_for(15) # Sleep for fifteen minutes
 ```

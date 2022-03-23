@@ -2,7 +2,7 @@ from time import sleep
 from random import random, uniform
 from datetime import datetime, timedelta
 
-class timeout:
+class random_timeout:
     '''Random timeout between minimum and maximum values'''
     def __init__(self, minimum, maximum):
         minimum -= random() # Random float between 0 and 1
@@ -21,9 +21,8 @@ class timeout:
         sleep(timeout_in_seconds)
 
 
-class sleep_until:
-    '''Sleep amount of time in minutes, print when it will wakeup'''
-
+class sleep_for:
+    '''Sleep amount of time in minutes, prints when it will continue'''
     def __init__(self, minutes):
         til = datetime.now() + timedelta(minutes=minutes)
         til = til.strftime('%H:%M')
