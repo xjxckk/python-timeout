@@ -5,7 +5,10 @@ from datetime import datetime, timedelta
 class random_timeout:
     '''Random timeout between minimum and maximum values'''
     def __init__(self, minimum, maximum):
-        minimum -= random() # Random float between 0 and 1
+        if minimum <= 0:
+            minimum = random()
+        else:
+            minimum -= random() # Random float between 0 and 1
         maximum += random()
         timeout_in_seconds = uniform(minimum, maximum) # Random float between minimum and maximum
         if timeout_in_seconds > 3600:
@@ -19,7 +22,6 @@ class random_timeout:
             til = til.strftime('%H:%M')
             print('Sleeping', timeout_in_minutes, 'minutes until', til)
         sleep(timeout_in_seconds)
-
 
 class sleep_for:
     '''Sleep amount of time in minutes, prints when it will continue'''
