@@ -4,7 +4,9 @@ from datetime import datetime, timedelta
 
 class random_timeout:
     '''Random timeout between minimum and maximum values'''
-    def __init__(self, minimum, maximum):
+    def __init__(self, minimum, maximum=None):
+        if not maximum:
+            maximum = minimum
         if minimum <= 0:
             minimum = random()
         else:
