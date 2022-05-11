@@ -6,35 +6,43 @@ class random_timeout:
     '''Random timeout between from and to values'''
     def __init__(self, from_seconds=None, to_seconds=None, from_minutes=None, to_minutes=None, from_hours=None, to_hours=None, from_days=None, to_days=None):
         if from_seconds is not None:
-            minimum = from_seconds
+            if from_seconds <= 0:
+                minimum = random()
+            else:
+                minimum = from_seconds - random() # Random float between 0 and 1
             if to_seconds:
                 maximum = to_seconds
             else:
-                maximum = minimum
+                maximum = from_seconds
+            maximum += random()
         elif from_minutes is not None:
-            minimum = from_minutes * 60
+            if from_minutes <= 0:
+                minimum = random()
+            else:
+                minimum = (from_minutes - random()) * 60 # Random float between 0 and 1
             if to_minutes:
-                maximum = to_minutes * 60
+                maximum = (to_minutes + random()) * 60
             else:
-                maximum = minimum
+                maximum = from_minutes + random()
         elif from_hours is not None:
-            minimum = from_hours * 3600
+            if from_hours <= 0:
+                minimum = random()
+            else:
+                minimum = (from_hours - random()) * 3600 # Random float between 0 and 1
             if to_hours:
-                maximum = to_hours * 3600
+                maximum = (to_hours + random()) * 3600
             else:
-                maximum = minimum
+                maximum = from_hours + random()
         elif from_days is not None:
-            minimum = from_days * 60
-            if to_days:
-                maximum = to_days * 86400
+            if from_days <= 0:
+                minimum = random()
             else:
-                maximum = minimum
-        
-        if minimum <= 0:
-            minimum = random()
-        else:
-            minimum -= random() # Random float between 0 and 1
-        maximum += random()
+                minimum = (from_days - random()) * 86400 # Random float between 0 and 1
+            if to_days:
+                maximum = (to_days + random()) * 86400
+            else:
+                maximum = from_days + random()
+                
         timeout_in_seconds = uniform(minimum, maximum) # Random float between minimum and maximum
         if from_minutes or timeout_in_seconds > 60:
             timeout_in_minutes = round(timeout_in_seconds / 60) # Convert sleep time in seconds to minutes
