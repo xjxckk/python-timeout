@@ -3,17 +3,20 @@ from time import sleep
 from random import random, uniform
 from datetime import datetime, timedelta
 
+
 class setup_timeout:
-    def __init__(self, log=None):
-        self.log = log
+    def __init__(self):
+        self.logger = logging.getLogger()
 
     '''Random timeout between from and to values'''
-    def random_timeout(self, from_seconds=None, to_seconds=None, from_minutes=None, to_minutes=None, from_hours=None, to_hours=None, from_days=None, to_days=None):
+
+    def random_timeout(self, from_seconds=None, to_seconds=None, from_minutes=None, to_minutes=None, from_hours=None,
+                       to_hours=None, from_days=None, to_days=None):
         if from_seconds is not None:
             if from_seconds == 0:
                 minimum = random()
             elif from_seconds > 1:
-                minimum = from_seconds - random() # Random float between 0 and 1
+                minimum = from_seconds - random()  # Random float between 0 and 1
             else:
                 minimum = from_seconds
             if to_seconds:
@@ -26,7 +29,7 @@ class setup_timeout:
             if from_minutes == 0:
                 minimum = random()
             else:
-                minimum = (from_minutes - random()) * 60 # Random float between 0 and 1
+                minimum = (from_minutes - random()) * 60  # Random float between 0 and 1
             if to_minutes:
                 maximum = (to_minutes + random()) * 60
             else:
@@ -35,7 +38,7 @@ class setup_timeout:
             if from_hours == 0:
                 minimum = random()
             else:
-                minimum = (from_hours - random()) * 3600 # Random float between 0 and 1
+                minimum = (from_hours - random()) * 3600  # Random float between 0 and 1
             if to_hours:
                 maximum = (to_hours + random()) * 3600
             else:
@@ -44,33 +47,34 @@ class setup_timeout:
             if from_days == 0:
                 minimum = random()
             else:
-                minimum = (from_days - random()) * 86400 # Random float between 0 and 1
+                minimum = (from_days - random()) * 86400  # Random float between 0 and 1
             if to_days:
                 maximum = (to_days + random()) * 86400
             else:
                 maximum = from_days + random()
 
-        timeout_in_seconds = uniform(minimum, maximum) # Random float between minimum and maximum
+        timeout_in_seconds = uniform(minimum, maximum)  # Random float between minimum and maximum
         if timeout_in_seconds < 60:
             self.printer('Sleeping', timeout_in_seconds, 'seconds', level='debug')
         if timeout_in_seconds >= 60 or from_minutes:
-            timeout_in_minutes = round(timeout_in_seconds / 60) # Convert sleep time in seconds to minutes
+            timeout_in_minutes = round(timeout_in_seconds / 60)  # Convert sleep time in seconds to minutes
             til = datetime.now() + timedelta(minutes=timeout_in_minutes)
             til = til.strftime('%H:%M')
             self.printer('Sleeping', timeout_in_minutes, 'minutes until', til)
         elif from_hours or timeout_in_seconds > 3600:
-            timeout_in_hours = round(timeout_in_seconds / 3600) # Convert sleep time in seconds to hours
+            timeout_in_hours = round(timeout_in_seconds / 3600)  # Convert sleep time in seconds to hours
             til = datetime.now() + timedelta(hours=timeout_in_hours)
             til = til.strftime('%H:%M')
             self.printer('Sleeping', timeout_in_hours, 'hours until', til)
         elif from_days or timeout_in_seconds > 86400:
-            timeout_in_hours = round(timeout_in_seconds / 86400) # Convert sleep time in seconds to days
+            timeout_in_days = round(timeout_in_seconds / 86400)  # Convert sleep time in seconds to days
             til = datetime.now() + timedelta(days=timeout_in_days)
             til = til.strftime('%A, %B %e')
             self.printer('Sleeping', timeout_in_days, 'days until', til)
         sleep(timeout_in_seconds)
-    
+
     '''Sleep amount of time in minutes, hours or days and prints when it will continue'''
+
     def sleep_for(self, minutes=None, hours=None, days=None):
         if minutes:
             til = datetime.now() + timedelta(minutes=minutes)
@@ -90,21 +94,25 @@ class setup_timeout:
             self.printer('Sleeping', days, 'days until', til)
             self.printer()
             sleep(days * 86400)
-    
+
     def printer(self, *items, level='info'):
-        if self.log:
-            log(*items, level=level)
+        if self.logger:
+            self.logger.log(level=level, *items)
+
         elif level != 'debug':
             print(items)
 
+
 class random_timeout:
-    '''Random timeout between from and to values'''
-    def __init__(self, from_seconds=None, to_seconds=None, from_minutes=None, to_minutes=None, from_hours=None, to_hours=None, from_days=None, to_days=None):
+    """Random timeout between from and to values"""
+
+    def __init__(self, from_seconds=None, to_seconds=None, from_minutes=None, to_minutes=None, from_hours=None,
+                 to_hours=None, from_days=None, to_days=None):
         if from_seconds is not None:
             if from_seconds == 0:
                 minimum = random()
             elif from_seconds > 1:
-                minimum = from_seconds - random() # Random float between 0 and 1
+                minimum = from_seconds - random()  # Random float between 0 and 1
             else:
                 minimum = from_seconds
             if to_seconds:
@@ -117,7 +125,7 @@ class random_timeout:
             if from_minutes == 0:
                 minimum = random()
             else:
-                minimum = (from_minutes - random()) * 60 # Random float between 0 and 1
+                minimum = (from_minutes - random()) * 60  # Random float between 0 and 1
             if to_minutes:
                 maximum = (to_minutes + random()) * 60
             else:
@@ -126,7 +134,7 @@ class random_timeout:
             if from_hours == 0:
                 minimum = random()
             else:
-                minimum = (from_hours - random()) * 3600 # Random float between 0 and 1
+                minimum = (from_hours - random()) * 3600  # Random float between 0 and 1
             if to_hours:
                 maximum = (to_hours + random()) * 3600
             else:
@@ -135,32 +143,34 @@ class random_timeout:
             if from_days == 0:
                 minimum = random()
             else:
-                minimum = (from_days - random()) * 86400 # Random float between 0 and 1
+                minimum = (from_days - random()) * 86400  # Random float between 0 and 1
             if to_days:
                 maximum = (to_days + random()) * 86400
             else:
                 maximum = from_days + random()
-                
-        timeout_in_seconds = uniform(minimum, maximum) # Random float between minimum and maximum
+
+        timeout_in_seconds = uniform(minimum, maximum)  # Random float between minimum and maximum
         if from_minutes or timeout_in_seconds > 60:
-            timeout_in_minutes = round(timeout_in_seconds / 60) # Convert sleep time in seconds to minutes
+            timeout_in_minutes = round(timeout_in_seconds / 60)  # Convert sleep time in seconds to minutes
             til = datetime.now() + timedelta(minutes=timeout_in_minutes)
             til = til.strftime('%H:%M')
             print('Sleeping', timeout_in_minutes, 'minutes until', til)
         elif from_hours or timeout_in_seconds > 3600:
-            timeout_in_hours = round(timeout_in_seconds / 3600) # Convert sleep time in seconds to hours
+            timeout_in_hours = round(timeout_in_seconds / 3600)  # Convert sleep time in seconds to hours
             til = datetime.now() + timedelta(hours=timeout_in_hours)
             til = til.strftime('%H:%M')
             print('Sleeping', timeout_in_hours, 'hours until', til)
         elif from_days or timeout_in_seconds > 86400:
-            timeout_in_hours = round(timeout_in_seconds / 86400) # Convert sleep time in seconds to days
+            timeout_in_days = round(timeout_in_seconds / 86400)  # Convert sleep time in seconds to days
             til = datetime.now() + timedelta(days=timeout_in_days)
             til = til.strftime('%A, %B %e')
             print('Sleeping', timeout_in_days, 'days until', til)
         sleep(timeout_in_seconds)
 
+
 class sleep_for:
-    '''Sleep amount of time in minutes, hours or days and prints when it will continue'''
+    """Sleep amount of time in minutes, hours or days and prints when it will continue"""
+
     def __init__(self, minutes=None, hours=None, days=None):
         if minutes:
             til = datetime.now() + timedelta(minutes=minutes)
