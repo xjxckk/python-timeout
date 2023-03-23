@@ -111,7 +111,7 @@ class sleep_for:
             timeout_in_minutes = round(timeout_in_seconds / 60) # Convert sleep time in seconds to minutes
             til = datetime.now() + timedelta(minutes=timeout_in_minutes)
             til = til.strftime('%H:%M')
-            if timeout_in_hours == 1:
+            if timeout_in_minutes == 1:
                 printr('Sleeping 1 minute until', til)
             else:
                 printr('Sleeping', timeout_in_minutes, 'minutes until', til)
