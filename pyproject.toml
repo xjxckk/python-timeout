@@ -1,0 +1,5 @@
+[project]
+name = "git-cola"
+authors = [
+    {name = "xjxckk", email = ""}
+]
