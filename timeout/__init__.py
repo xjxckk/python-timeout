@@ -1,7 +1,48 @@
 from time import sleep
-from random import random, uniform
+from random import random, uniform, randrange
 from datetime import datetime, timedelta
+from dateutil.parser import parse
 from printr import printr
+
+class sleep_timer:
+    def __init__(self, hour_to_start_at, hour_to_stop_at):
+        if type(hour_to_start_at) == int:
+            self.hour_to_start_at = hour_to_start_at
+            self.hour_to_stop_at = hour_to_stop_at
+        else:
+            self.hour_to_start_at = parse(hour_to_start_at).hour
+            self.hour_to_stop_at = parse(hour_to_stop_at).hour
+
+        self.random_minute_to_start_at = randrange(0, 59)
+        self.random_minute_to_end_at = randrange(0, 59) # If started after start_hour generate a random minute to end at
+
+        self.is_active = False
+    
+    def during_active_time(self):
+        now = datetime.now()
+        current_hour = now.hour
+        current_minute = now.minute
+
+        # Check within active hours
+        if self.hour_to_start_at <= current_hour <= self.hour_to_stop_at:
+            if not self.is_active and current_hour == self.hour_to_start_at and self.random_minute_to_start_at == 0:
+                self.random_minute_to_start_at = randrange(0, 59)
+                self.random_minute_to_end_at = randrange(0, 59)
+
+            # Check after start time with randomised minute to start at
+            if current_hour == self.hour_to_start_at and current_minute >= self.random_minute_to_start_at:
+                self.is_active = True
+
+            elif self.hour_to_start_at < current_hour < self.hour_to_stop_at:
+                self.is_active = True
+                if self.random_minute_to_start_at != 0:
+                    self.random_minute_to_start_at = 0
+
+            # Check before end time including randomised minute to end at
+            elif current_hour == self.hour_to_stop_at and current_minute >= self.random_minute_to_end_at:
+                self.is_active = False
+
+        return self.is_active
 
 class random_timeout:
     '''Random timeout between from and to values'''
@@ -69,7 +110,7 @@ class random_timeout:
                     printr('Sleeping', timeout_in_hours, 'hours until', til)
             elif timeout_in_seconds >= 60:
                 timeout_in_minutes = round(timeout_in_seconds / 60) # Convert sleep time in seconds to minutes
-                til = datetime.now() + timedelta(timeout_in_seconds=timeout_in_seconds)
+                til = datetime.now() + timedelta(seconds=timeout_in_seconds)
                 til = til.strftime('%H:%M')
                 if timeout_in_minutes == 1:
                     printr('Sleeping 1 minute until', til)
