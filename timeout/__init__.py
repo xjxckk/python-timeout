@@ -1,17 +1,20 @@
 from time import sleep
 from random import random, uniform, randrange
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from dateutil.parser import parse
 from printr import printr
 
 class sleep_timer:
-    def __init__(self, hour_to_start_at, hour_to_stop_at):
+    def __init__(self, hour_to_start_at, hour_to_stop_at, sleeping_message='Sleeping'):
         if type(hour_to_start_at) == int:
             self.hour_to_start_at = hour_to_start_at
             self.hour_to_stop_at = hour_to_stop_at
         else:
             self.hour_to_start_at = parse(hour_to_start_at).hour
             self.hour_to_stop_at = parse(hour_to_stop_at).hour
+
+        self.sleeping_message = sleeping_message
+        self.printed_sleeping_message = False
 
         self.random_minute_to_start_at = randrange(0, 59)
         self.random_minute_to_end_at = randrange(0, 59) # If started after start_hour generate a random minute to end at
@@ -25,10 +28,6 @@ class sleep_timer:
 
         # Check within active hours
         if self.hour_to_start_at <= current_hour <= self.hour_to_stop_at:
-            if not self.is_active and current_hour == self.hour_to_start_at and self.random_minute_to_start_at == 0:
-                self.random_minute_to_start_at = randrange(0, 59)
-                self.random_minute_to_end_at = randrange(0, 59)
-
             # Check after start time with randomised minute to start at
             if current_hour == self.hour_to_start_at and current_minute >= self.random_minute_to_start_at:
                 self.is_active = True
@@ -42,7 +41,38 @@ class sleep_timer:
             elif current_hour == self.hour_to_stop_at and current_minute >= self.random_minute_to_end_at:
                 self.is_active = False
 
+                if self.random_minute_to_start_at == 0:
+                    self.random_minute_to_start_at = randrange(0, 59)
+                    self.random_minute_to_end_at = randrange(0, 59)
+                
+                if not self.printed_sleeping_message:
+                    self.print_sleeping_message()
+        
+        if current_hour > self.hour_to_stop_at and not self.printed_sleeping_message:
+            self.print_sleeping_message()
+
         return self.is_active
+    
+    def print_sleeping_message(self):
+        current_hour = datetime.now().hour # 11:13pm would have an hour of 23
+        current_minute = datetime.now().minute # 11:13pm would have a minute of 13
+
+        number_of_hours_til_start = self.hour_to_start_at - current_hour # 8 - 23 = -15
+        if self.hour_to_start_at < current_hour: # If hour to start at is tomorrow
+            number_of_hours_til_start += 24 # -15 + 24 = 9
+        
+        # If we end at 11:13pm and start at 8:49am the difference between the minutes is more than 30 so add an exta hour
+        if self.random_minute_to_start_at - current_minute > 30:
+            number_of_hours_til_start += 1
+
+        formatted_time_to_start_at = f'{self.hour_to_start_at}:{self.random_minute_to_start_at}' # 8:22, must use fstring due to integers
+        
+        if number_of_hours_til_start == 1:
+            printr(self.sleeping_message, '1 hour until', formatted_time_to_start_at)
+        else:
+            printr(self.sleeping_message, number_of_hours_til_start, 'hours until', formatted_time_to_start_at)
+
+        self.printed_sleeping_message = True
 
 class random_timeout:
     '''Random timeout between from and to values'''
