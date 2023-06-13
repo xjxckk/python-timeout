@@ -2,7 +2,7 @@ from time import sleep
 from random import random, uniform, randrange
 from datetime import datetime, timedelta, time
 from dateutil.parser import parse
-from printr import printr
+from printr import print
 
 class sleep_timer:
     def __init__(self, hour_to_start_at, hour_to_stop_at, sleeping_message='Sleeping'):
@@ -68,9 +68,9 @@ class sleep_timer:
         formatted_time_to_start_at = f'{self.hour_to_start_at}:{self.random_minute_to_start_at}' # 8:22, must use fstring due to integers
         
         if number_of_hours_til_start == 1:
-            printr(self.sleeping_message, '1 hour until', formatted_time_to_start_at)
+            print(self.sleeping_message, '1 hour until', formatted_time_to_start_at)
         else:
-            printr(self.sleeping_message, number_of_hours_til_start, 'hours until', formatted_time_to_start_at)
+            print(self.sleeping_message, number_of_hours_til_start, 'hours until', formatted_time_to_start_at)
 
         self.printed_sleeping_message = True
 
@@ -121,31 +121,31 @@ class random_timeout:
         timeout_in_seconds = uniform(minimum, maximum) # Random float between minimum and maximum
         if not silent:
             if timeout_in_seconds < 60:
-                printr('Sleeping', timeout_in_seconds, 'seconds', level='debug')
+                print('Sleeping', timeout_in_seconds, 'seconds', level='debug')
             elif timeout_in_seconds > 86400:
                 timeout_in_days = round(timeout_in_seconds / 86400) # Convert sleep time in seconds to days
                 til = datetime.now() + timedelta(seconds=timeout_in_seconds)
                 til = til.strftime('%A, %B %e')
                 if timeout_in_days == 1:
-                    printr('Sleeping 1 day until', til)
+                    print('Sleeping 1 day until', til)
                 else:
-                    printr('Sleeping', timeout_in_days, 'days until', til)
+                    print('Sleeping', timeout_in_days, 'days until', til)
             elif timeout_in_seconds > 3600:
                 timeout_in_hours = round(timeout_in_seconds / 3600) # Convert sleep time in seconds to hours
                 til = datetime.now() + timedelta(seconds=timeout_in_seconds)
                 til = til.strftime('%H:%M')
                 if timeout_in_hours == 1:
-                    printr('Sleeping 1 hour until', til)
+                    print('Sleeping 1 hour until', til)
                 else:
-                    printr('Sleeping', timeout_in_hours, 'hours until', til)
+                    print('Sleeping', timeout_in_hours, 'hours until', til)
             elif timeout_in_seconds >= 60:
                 timeout_in_minutes = round(timeout_in_seconds / 60) # Convert sleep time in seconds to minutes
                 til = datetime.now() + timedelta(seconds=timeout_in_seconds)
                 til = til.strftime('%H:%M')
                 if timeout_in_minutes == 1:
-                    printr('Sleeping 1 minute until', til)
+                    print('Sleeping 1 minute until', til)
                 else:
-                    printr('Sleeping', timeout_in_minutes, 'minutes until', til)
+                    print('Sleeping', timeout_in_minutes, 'minutes until', til)
 
         sleep(timeout_in_seconds)
 
@@ -163,30 +163,30 @@ class sleep_for:
 
         if not silent:
             if timeout_in_seconds < 60:
-                printr('Sleeping', timeout_in_seconds, 'seconds', level='debug')
+                print('Sleeping', timeout_in_seconds, 'seconds', level='debug')
             elif timeout_in_seconds > 86400:
                 timeout_in_days = round(timeout_in_seconds / 86400) # Convert sleep time in seconds to days
                 til = datetime.now() + timedelta(seconds=timeout_in_seconds)
                 til = til.strftime('%A, %B %e')
                 if timeout_in_days == 1:
-                    printr('Sleeping 1 day until', til)
+                    print('Sleeping 1 day until', til)
                 else:
-                    printr('Sleeping', timeout_in_days, 'days until', til)
+                    print('Sleeping', timeout_in_days, 'days until', til)
             elif timeout_in_seconds > 3600:
                 timeout_in_hours = round(timeout_in_seconds / 3600) # Convert sleep time in seconds to hours
                 til = datetime.now() + timedelta(seconds=timeout_in_seconds)
                 til = til.strftime('%H:%M')
                 if timeout_in_hours == 1:
-                    printr('Sleeping 1 hour until', til)
+                    print('Sleeping 1 hour until', til)
                 else:
-                    printr('Sleeping', timeout_in_hours, 'hours until', til)
+                    print('Sleeping', timeout_in_hours, 'hours until', til)
             elif timeout_in_seconds >= 60:
                 timeout_in_minutes = round(timeout_in_seconds / 60) # Convert sleep time in seconds to minutes
                 til = datetime.now() + timedelta(seconds=timeout_in_seconds)
                 til = til.strftime('%H:%M')
                 if timeout_in_minutes == 1:
-                    printr('Sleeping 1 minute until', til)
+                    print('Sleeping 1 minute until', til)
                 else:
-                    printr('Sleeping', timeout_in_minutes, 'minutes until', til)
+                    print('Sleeping', timeout_in_minutes, 'minutes until', til)
 
         sleep(timeout_in_seconds)
