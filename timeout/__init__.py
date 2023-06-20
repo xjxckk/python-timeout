@@ -147,9 +147,10 @@ class random_timeout:
                 else:
                     print('Sleeping', timeout_in_minutes, 'minutes until', til)
 
-        sleep(timeout_in_seconds)
+        wait(timeout_in_seconds)
 
-class sleep_for:
+wait = sleep
+class sleep:
     '''Sleep amount of time in minutes, hours or days and prints when it will continue'''
     def __init__(self, seconds=None, minutes=None, hours=None, days=None, silent=False):
         if seconds:
@@ -189,4 +190,9 @@ class sleep_for:
                 else:
                     print('Sleeping', timeout_in_minutes, 'minutes until', til)
 
-        sleep(timeout_in_seconds)
+        wait(timeout_in_seconds)
+
+class sleep_for:
+    '''Sleep amount of time in minutes, hours or days and prints when it will continue'''
+    def __init__(self, seconds=None, minutes=None, hours=None, days=None, silent=False):
+        sleep(seconds, minutes, hours, days, silent)
