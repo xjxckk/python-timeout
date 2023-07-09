@@ -18,4 +18,10 @@ random_timeout(from_hours=1) # Random timeout for around one hour
 sleep(5) # Sleep for five seconds
 sleep(minutes=15) # Sleep for fifteen minutes
 sleep(hours=2) # Sleep for two hours
+
+from timeout import sleep_timer
+
+during_active_time = sleep_timer('8am', '10pm').during_active_time
+if during_active_time(): # Only active between certain time range
+    run()
 ```
