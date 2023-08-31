@@ -21,34 +21,43 @@ class sleep_timer:
 
         self.is_active = False
     
+    def current_hour_within_active_hours(self, current_hour):
+        # Check within active hours
+        if self.hour_to_start_at < current_hour < self.hour_to_stop_at:
+            return True
+        elif self.hour_to_stop_at < self.hour_to_start_at:
+            if current_hour > self.hour_to_start_at:
+                return True
+            elif current_hour < self.hour_to_stop_at:
+                return True
+        return False
+    
     def during_active_time(self):
         now = datetime.now()
         current_hour = now.hour
         current_minute = now.minute
 
-        # Check within active hours
-        if self.hour_to_start_at <= current_hour <= self.hour_to_stop_at:
+        if self.current_hour_within_active_hours(current_hour):
+            self.is_active = True
+            if self.random_minute_to_start_at != 0:
+                self.random_minute_to_start_at = 0
+
             # Check after start time with randomised minute to start at
-            if current_hour == self.hour_to_start_at and current_minute >= self.random_minute_to_start_at:
-                self.is_active = True
+        elif current_hour == self.hour_to_start_at and current_minute >= self.random_minute_to_start_at:
+            self.is_active = True
 
-            elif self.hour_to_start_at < current_hour < self.hour_to_stop_at:
-                self.is_active = True
-                if self.random_minute_to_start_at != 0:
-                    self.random_minute_to_start_at = 0
+        # Check before end time including randomised minute to end at
+        elif current_hour == self.hour_to_stop_at and current_minute >= self.random_minute_to_end_at:
+            self.is_active = False
 
-            # Check before end time including randomised minute to end at
-            elif current_hour == self.hour_to_stop_at and current_minute >= self.random_minute_to_end_at:
-                self.is_active = False
-
-                if self.random_minute_to_start_at == 0:
-                    self.random_minute_to_start_at = randrange(0, 59)
-                    self.random_minute_to_end_at = randrange(0, 59)
-                
-                if not self.printed_sleeping_message:
-                    self.print_sleeping_message()
+            if self.random_minute_to_start_at == 0:
+                self.random_minute_to_start_at = randrange(0, 59)
+                self.random_minute_to_end_at = randrange(0, 59)
+            
+            if not self.printed_sleeping_message:
+                self.print_sleeping_message()
         
-        if current_hour > self.hour_to_stop_at and not self.printed_sleeping_message:
+        if not self.is_active and not self.printed_sleeping_message:
             self.print_sleeping_message()
 
         return self.is_active
