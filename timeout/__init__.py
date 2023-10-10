@@ -74,7 +74,7 @@ class sleep_timer:
         if self.random_minute_to_start_at - current_minute > 30:
             number_of_hours_til_start += 1
 
-        formatted_time_to_start_at = f'{self.hour_to_start_at}:{self.random_minute_to_start_at}' # 8:22, must use fstring due to integers
+        formatted_time_to_start_at = f'{self.hour_to_start_at}:{self.random_minute_to_start_at:02d}' # 8:22, must use fstring due to integers
         
         if number_of_hours_til_start == 1:
             print(self.sleeping_message, '1 hour until', formatted_time_to_start_at)
