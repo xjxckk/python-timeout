@@ -19,9 +19,9 @@ sleep(5) # Sleep for five seconds
 sleep(minutes=15) # Sleep for fifteen minutes
 sleep(hours=2) # Sleep for two hours
 
-from timeout import sleep_timer
+from timeout import SleepTimer
 
-during_active_time = sleep_timer('8am', '10pm').during_active_time
+during_active_time = SleepTimer('8am', '10pm').during_active_time
 if during_active_time(): # Only active between certain time range
     run()
 ```

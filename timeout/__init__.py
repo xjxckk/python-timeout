@@ -4,7 +4,8 @@ from datetime import datetime, timedelta, time
 from dateutil.parser import parse
 from printr import print
 
-class sleep_timer:
+class SleepTimer:
+    '''Sleep outside of set active hours'''
     def __init__(self, hour_to_start_at, hour_to_stop_at, sleeping_message='Sleeping'):
         if type(hour_to_start_at) == int:
             self.hour_to_start_at = hour_to_start_at
@@ -82,6 +83,12 @@ class sleep_timer:
             print(self.sleeping_message, number_of_hours_til_start, 'hours until', formatted_time_to_start_at)
 
         self.printed_sleeping_message = True
+
+
+class sleep_timer:
+    '''Sleep outside of set active hours'''
+    def __init__(self, hour_to_start_at, hour_to_stop_at, sleeping_message='Sleeping'):
+        SleepTimer(hour_to_start_at, hour_to_stop_at, sleeping_message)
 
 class random_timeout:
     '''Random timeout between from and to values'''
