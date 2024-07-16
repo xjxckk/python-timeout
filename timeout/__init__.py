@@ -7,6 +7,9 @@ from printr import print
 class SleepTimer:
     '''Sleep outside of set active hours'''
     def __init__(self, hour_to_start_at=True, hour_to_stop_at=None, sleeping_message='Sleeping'):
+        if not hour_to_start_at:
+            hour_to_start_at = True
+            hour_to_stop_at = None
         if type(hour_to_start_at) != str:
             self.hour_to_start_at = hour_to_start_at
             self.hour_to_stop_at = hour_to_stop_at
