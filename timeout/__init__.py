@@ -95,7 +95,7 @@ class SleepTimer:
 class sleep_timer:
     '''Sleep outside of set active hours'''
     def __init__(self, hour_to_start_at, hour_to_stop_at, sleeping_message='Sleeping'):
-        SleepTimer(hour_to_start_at, hour_to_stop_at, sleeping_message)
+        return SleepTimer(hour_to_start_at, hour_to_stop_at, sleeping_message)
 
 class random_timeout:
     '''Random timeout between from and to values'''
