@@ -1,6 +1,7 @@
+from timeout import sleep_timer
 
-
-# sleep_timer = sleep_timer('1pm', '2pm')
+sleep_timer = sleep_timer('1pm', '2pm')
+print(sleep_timer.during_active_time())
 # start_time = f'13:{sleep_timer.random_minute_to_start_at}'
 # end_time = f'14:{sleep_timer.random_minute_to_end_at}'
 # current_time('Start time:', start_time)
