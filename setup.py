@@ -4,7 +4,7 @@ setup(
     name = 'python-timeout',
     packages = ['timeout'],
     install_requires = ['python-dateutil', 'python-printr'],
-    version='6.0',
+    version='6.1',
     description = 'Random timeout between minimum and maximum values',
     url = 'https://github.com/xjxckk/python-timeout/',
     long_description=open('README.md').read(),
